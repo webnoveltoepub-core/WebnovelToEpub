@@ -9,7 +9,7 @@ from Argument import Argument
 from ConfigVerify import ConfigVerify
 from ConfigHandler import ConfigHandler
 
-from HttpHandler import HttpHandler
+from src.Requests.HttpHandler import HttpHandler
 from FetchChapterURLs import FetchChapterURLs
 from FetchChapterContent import FetchChapterContent
 from CreateEPUB import CreateEPUB

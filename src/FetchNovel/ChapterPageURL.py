@@ -1,7 +1,8 @@
 import json
 
 # creates a basic url to the chapterlist that containtes the chapterurls(without paging) and doesn't make any *request*
-class FetchChapterList:
+# creates url to chapter page (where the chapter urls are listed); if more then one it will be modified by ChapterURLs
+class ChapterPageURL:
     def __init__(self, requestConfig: json, typeServer: bool, url: str):
         self.__requestConfig = requestConfig
         self.__typeServer = typeServer

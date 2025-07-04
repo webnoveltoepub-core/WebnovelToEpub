@@ -5,7 +5,8 @@ import json
 from HTMLSearch import HTMLSearch
 
 # fetches chapter content(title and paragraphes of chapter) within each returned conent based on chapterurl(fetched by fetchChapterURLs)
-class FetchChapterContent:
+# pass return of chapter requests here; gets chapter content (lines of text) and it's chapter title
+class FetchContent:
     def __init__(self, httpRequest: requests, requestConfig: json):
         self.__httpRequest = httpRequest # same object and session of "httpRequest" given by "main.py"
         self.__requestConfig = requestConfig
@@ -44,7 +45,7 @@ class FetchChapterContent:
         if tagHtml or tagClassHtml or tagIdHtml:
             self.__HTMLpraser.searchElements(tagHtml, tagClassHtml, tagIdHtml)
         
-    def getChapterTitle(self) -> str: # returns without tags as string
+    def getTitle(self) -> str: # returns without tags as string
         self.setDefaultTag(None)
         self.fetchChapter("chaptertitle") # fetches the title of the chapter
         attribute = self.__requestConfig["pattern"]["chaptertitle"].get("attribute", None)
@@ -60,7 +61,7 @@ class FetchChapterContent:
         return str(chapterTitle)
     
     # works allmost everytime if p tags are used(or other tags within a soup list len(nestedElements) > 1)
-    def nestedChapterContent(self, nestedElements: BeautifulSoup) -> BeautifulSoup:
+    def __nestedContent(self, nestedElements: BeautifulSoup) -> BeautifulSoup:
         flippedElements: list[BeautifulSoup] = []
         for i in range(len(nestedElements) - 1, -1, -1): # remove nesting
             nestedElement: BeautifulSoup = nestedElements[i]
