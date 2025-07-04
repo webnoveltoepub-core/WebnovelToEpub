@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import json
 
-from HTMLSearch import HTMLSearch
+from Requests.HTMLSearch import HTMLSearch
 
 # fetches chapter content(title and paragraphes of chapter) within each returned conent based on chapterurl(fetched by fetchChapterURLs)
 # pass return of chapter requests here; gets chapter content (lines of text) and it's chapter title

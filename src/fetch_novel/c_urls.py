@@ -3,8 +3,8 @@ import requests
 import json
 import re
 
-from FetchChapterList import FetchChapterList
-from HTMLSearch import HTMLSearch
+from FetchNovel.ChapterPageURL import FetchChapterList
+from Requests.HTMLSearch import HTMLSearch
 
 # uses FetchChapterLists url to the list of chapters(without paging), modifies it(add pages if possible) and fetches the chapterurls
 class FetchChapterURLs(FetchChapterList):
