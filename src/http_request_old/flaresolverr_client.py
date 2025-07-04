@@ -5,11 +5,11 @@ class FlaresolverrClient:
     def __init__(self, flare_url: str = "http://localhost:8191/v1", session_id: str = None): # CHANGEME base_url get through conf
         self.__flare_url: str = flare_url
         self.__session_id: str = session_id
-        
+
     # make request to flaresolverr server; getting html side in str format
-    def get(self, url: str, http_header: dict[str,str] = None, max_timeout: int = 60000) -> str|None:
+    def get(self, url: str, http_header: dict[str, str] = None, max_timeout: int = 60000) -> str|None:
         # for flaresolverr
-        payload: dict[str,str] = {
+        payload: dict[str, str] = {
             "cmd": "request.get",
             "url": url,
             "maxTimeout": max_timeout
@@ -23,9 +23,22 @@ class FlaresolverrClient:
         # requesting flaresolverr
         try:
             response: requests = requests.post(self.__flare_url, json = payload)
-            status: int = response.raise_for_status()
+            response.raise_for_status()
             return response.json().get("solution", {}).get("response")
         # error while connecting to flaresolverr server
         except requests.RequestException as e:
-            print(f"{status}: *{e}* - '{self.__flare_url}'")
+            print(f"{e.response.status_code}: *{e}* - '{self.__flare_url}'")
             return None
+        
+    # remove session id from flaresolverr
+    def __del__(self):
+        if self.__session_id:
+            payload: dict[str, str] = {
+                "cmd": "sessions.destroy",
+                "session": self.__session_id
+            }
+            try:
+                response: requests = response.post(self.__flare_url, json=payload)
+                response.raise_for_status()
+            except requests.RequestException as e:
+                print(f"{e.response.status_code}: *{e}* - Failed to destroy Flaresolverr session - '{self.__flare_url}'")
