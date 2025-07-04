@@ -3,11 +3,11 @@ import requests
 import json
 import re
 
-from FetchNovel.ChapterPageURL import FetchChapterList
-from Requests.HTMLSearch import HTMLSearch
+from src.fetch_novel.c_page_url import ChapterPageURL
+from src.fetch_novel.html_search import HTMLSearch
 
 # uses FetchChapterLists url to the list of chapters(without paging), modifies it(add pages if possible) and fetches the chapterurls
-class FetchChapterURLs(FetchChapterList):
+class ChapterURLs(ChapterPageURL):
     def __init__(self, httpRequest: requests, requestConfig: json, typeServer: bool, url: str, debug: bool, debughtml: bool):
         super().__init__(requestConfig, typeServer, url)
         self.__chapterListURL = super().getChapterListURL()
