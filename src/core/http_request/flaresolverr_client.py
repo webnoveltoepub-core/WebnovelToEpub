@@ -50,7 +50,7 @@ class FlaresolverrClient:
 
     # remove session id from flaresolverr
     def __del__(self):
-        # if session_id is used; destroy session
+        # session_id is used -> destroy session
         if self.__session_id:
             self.__cmd = "sessions.destroy"
             self.get()

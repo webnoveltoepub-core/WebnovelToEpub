@@ -1,36 +1,26 @@
-import json
-
-from LoadJson import LoadJson
+from src.core.config.load_json import LoadJson
 
 # finds and sets correct headers for choosen server by the input url; also sets serverconfig
 class ConfigHandler(LoadJson): # returns config related jsons
     def __init__(self, url: str):
-        # loads and sets json configs
         super().__init__()
-        self.__config: json = super().getConfig()
-        self.__httpHeader: json = super().getHttpHeader()
+        # loading json as dict
+        self.__config: dict = super().getConfig()
+        self.__httpHeader: dict = super().getHttpHeader()
+        self.__url: str = url
 
-        # sets server related configs
-        self.setServerConfig(url)
-        self.setServerHttpHeader()
-        self.setCoverHttpHeader()
-
-    def setServerConfig(self, url: str) -> None:
-        status: bool = False # stays false if severconfig can not be found
-        for item in self.__config:
-            if str(item.get("server")) in url:
-                self.__serverConfig: json = item
-                status = True
-                break
-        if not status:
-            print("<< Server config not found >>")
-            exit()
+    def get_server_config(self) -> None:
+        for item in self.__config: # for in every server config
+            if item.get("server") in self.__url:
+                return item
+        print("<< Server config not found >>")
+        exit()
         
     def setServerHttpHeader(self) -> None: # based on ServerConfig
-        headerKey: str = self.__serverConfig["request"].get("header", "default") # json key of the httpHeader
-        httpHeader: json = self.__httpHeader.get(headerKey)
+        headerKey: str = self.__serverConfig["request"].get("header") # sets header id if found
+        
+        self.__serverHttpHeader: json = self.__httpHeader.get(headerKey) # gets dict of header id
         if headerKey and not httpHeader: # header not found and not default
-            print("<< Configured request header not found >>")
             httpHeader: json = self.__httpHeader.get("default")
         self.__serverHttpHeader = httpHeader
 
