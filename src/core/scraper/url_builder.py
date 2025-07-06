@@ -5,6 +5,9 @@ class URLBuilder:
         self.__parsed = urlparse(url)
         self.__query = parse_qs(self.__parsed.query)
 
+    def get_domain(self) -> str:
+        return self.__parsed.netloc
+
     def set_path(self, path: str):
         self.__parsed = self.__parsed._replace(path=path)
         return self
@@ -26,3 +29,5 @@ class URLBuilder:
         query_string = urlencode(self.__query, doseq=True)
         self.__parsed = self.__parsed._replace(query=query_string)
         return urlunparse(self.__parsed)
+    
+print(URLBuilder("https://novelfire.net/book/horror-game-developer-my-games-arent-that-scary").get_domain())

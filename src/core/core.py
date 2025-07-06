@@ -3,7 +3,7 @@ from src.core.http_request.flaresolverr_client import FlaresolverrClient
 from src.core.config.verify_json import ConfigVerify
 from src.core.config.config_handler import ConfigHandler
 
-from src.core.scraper.scraper import Scraper
+from src.core.scraper.html_scraper import Scraper
 
 # simplifies main function; scraping, building and modifing epubs
 class Core:
